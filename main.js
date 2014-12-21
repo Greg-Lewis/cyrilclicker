@@ -2,19 +2,26 @@ var USD = 0;
 var tourists = 0; 
 var mallCops = 0;
 var touristDPS = .1;
+var touristMult = 1.0;
 var baseTouristCost = 10;
 var mallCopDPS = .4;
 var baseMallCopCost = 100;
+var mallCopMult = 1.0;
 var peopleSaved = 0;
 var saveTime = 0;
+var tu1Bought = false;
+var mcu1Bought = false
+
+
 var WHDSAVE = {
 	USD : USD,
 	tourists: tourists,
 	mallCops: mallCops,
 	peopleSaved: peopleSaved,
-	saveTime: saveTime
+	saveTime: saveTime,
+	tu1Bought: tu1Bought,
+	mcu1Bought: mcu1Bought
 }
-//unused vars mallCopDPS, studentBPS intended for upgrades
 
 //click
 function cyrilClick(number){
@@ -37,7 +44,7 @@ function buyTourist(){
 	document.getElementById("DPS").innerHTML = Math.round(getDPS()*10)/10;
 }
 function touristsPerSecond(){
-	var tDPS = tourists*touristDPS;
+	var tDPS = tourists*touristDPS * touristMult;
 	USD += tDPS;
 	peopleSaved += tDPS;
 }
@@ -56,7 +63,7 @@ function buyMallCop(){
 	document.getElementById("DPS").innerHTML = Math.round(getDPS()*10)/10;
 }
 function mallCopsPerSecond(){
-	var tDPS = mallCops*mallCopDPS;
+	var tDPS = mallCops * mallCopDPS * mallCopMult;
 	USD += tDPS;
 	peopleSaved += tDPS;
 }
@@ -91,7 +98,9 @@ function saveGame(){
 		tourists: tourists,
 		mallCops: mallCops,
 		peopleSaved: peopleSaved,
-		saveTime: saveTime
+		saveTime: saveTime,
+		tu1Bought: tu1Bought,
+		mcu1Bought: mcu1Bought
 	}
 
 	localStorage.setItem("WHDSAVE", JSON.stringify(WHDSAVE));
@@ -138,4 +147,21 @@ function load(currentTime){
 
 function deleteLocalSave(){
 	localStorage.removeItem("WHDSAVE");
+}
+
+function touristUpgrade1(){
+	if (USD > 100 && tu1Bought == false){
+		tu1Bought = true;
+		touristMult += 2;
+		document.getElementById("tu1").style.visibility = 'hidden';
+	}
+	
+}
+function mallCopUpgrade1(){
+	if (USD > 1000 && mcu1Bought == false){
+		mcu1Bought = true;
+		mallCopMult += 4;
+		document.getElementById("mcu1").style.visibility = 'hidden';
+	}
+
 }
