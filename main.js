@@ -6,11 +6,13 @@ var baseTouristCost = 10;
 var mallCopDPS = .4;
 var baseMallCopCost = 100;
 var peopleSaved = 0;
+var saveTime = 0;
 var WHDSAVE = {
 	USD : USD,
 	tourists: tourists,
 	mallCops: mallCops,
-	peopleSaved: peopleSaved
+	peopleSaved: peopleSaved,
+	saveTime: saveTime
 }
 //unused vars mallCopDPS, studentBPS intended for upgrades
 
@@ -61,7 +63,8 @@ function mallCopsPerSecond(){
 
 
 window.onload = function init() {
-	load();
+	var currentTime = Date.now();
+	load(currentTime);
 }
 
 
@@ -76,32 +79,61 @@ window.setInterval(function(){
 }, 1000);
 
 //saving every 30 seconds
-window.setInterval(function(){
-	localStorage.setItem("WHDSAVE", JSON.stringify(WHDSAVE));
+window.setInterval(function(){	
+	saveGame();
 },30000);
 
 
+function saveGame(){
+	saveTime = Date.now();
+	WHDSAVE = {
+		USD : USD,
+		tourists: tourists,
+		mallCops: mallCops,
+		peopleSaved: peopleSaved,
+		saveTime: saveTime
+	}
 
+	localStorage.setItem("WHDSAVE", JSON.stringify(WHDSAVE));
+}
 function getDPS(){
 	return ((mallCops*mallCopDPS) + (tourists*touristDPS));
 }
 function getSaved(){
 	return peopleSaved;
 }
-function load(){
+function load(currentTime){
 	var saveGame = JSON.parse(localStorage.getItem("WHDSAVE"));
 	if (typeof saveGame.USD !== "undefined"){
 		USD = saveGame.USD;
+
 	}
 	if (typeof saveGame.tourists !== "undefined"){
 		tourists = saveGame.tourists;
+		document.getElementById("tourists").innerHTML = tourists;
+		document.getElementById("touristCost").innerHTML = Math.floor(baseTouristCost * Math.pow(1.1, tourists));
+
 	}
 	if (typeof saveGame.mallCops !== "undefined"){
 		mallCops = saveGame.mallCops;
+		document.getElementById("mallCops").innerHTML = mallCops;
+		document.getElementById("mallCopsCost").innerHTML = Math.floor(baseMallCopCost * Math.pow(1.1, mallCops));
 	}
 	if (typeof saveGame.peopleSaved !== "undefined"){
 		peopleSaved = saveGame.peopleSaved;
+		document.getElementById("peopleSaved").innerHTML = Math.floor(peopleSaved);
 	}
+	document.getElementById("DPS").innerHTML = Math.round(getDPS()*10)/10;
+	
+	if (typeof saveGame.saveTime !== "undefined"){
+		if (saveGame.saveTime <= currentTime){
+			var secondsPassed = ((currentTime/1000) - (saveGame.saveTime/1000));
+			USD += secondsPassed*getDPS()*.5;//half DPS while closed
+		}
+	}
+	document.getElementById("USD").innerHTML = Math.round(USD*10)/10;
+
+
 }
 
 function deleteLocalSave(){
