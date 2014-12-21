@@ -60,7 +60,9 @@ function mallCopsPerSecond(){
 }
 
 
-
+window.onload = function init() {
+	load();
+}
 
 
 //interval update
