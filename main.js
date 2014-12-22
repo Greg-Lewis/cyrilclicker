@@ -106,7 +106,7 @@ function saveGame(){
 	localStorage.setItem("WHDSAVE", JSON.stringify(WHDSAVE));
 }
 function getDPS(){
-	return ((mallCops*mallCopDPS) + (tourists*touristDPS));
+	return ((mallCops*mallCopDPS*mallCopMult) + (tourists*touristDPS*touristMult));
 }
 function getSaved(){
 	return peopleSaved;
@@ -130,17 +130,35 @@ function load(currentTime){
 	}
 	if (typeof saveGame.peopleSaved !== "undefined"){
 		peopleSaved = saveGame.peopleSaved;
-		document.getElementById("peopleSaved").innerHTML = Math.floor(peopleSaved);
 	}
-	document.getElementById("DPS").innerHTML = Math.round(getDPS()*10)/10;
 	
 	if (typeof saveGame.saveTime !== "undefined"){
 		if (saveGame.saveTime <= currentTime){
 			var secondsPassed = ((currentTime/1000) - (saveGame.saveTime/1000));
-			USD += secondsPassed*getDPS()*.5;//half DPS while closed
+			var passedValues = secondsPassed * getDPS() * .5;
+			USD += passedValues;//half DPS while closed
+			peopleSaved +=passedValues;
+		}
+	}
+
+	
+	if (typeof saveGame.tu1Bought !== "undefined"){
+		if (saveGame.tu1Bought == true){
+			touristMult += 1;
+			document.getElementById("tu1").style.visibility = 'hidden';
+		}
+	}
+	if (typeof saveGame.tu1Bought !== "undefined"){
+		if (saveGame.tu1Bought == true){
+			mallCopMult += 3;
+			document.getElementById("mcu1").style.visibility = 'hidden';
 		}
 	}
 	document.getElementById("USD").innerHTML = Math.round(USD*10)/10;
+	document.getElementById("peopleSaved").innerHTML = Math.floor(peopleSaved);
+	document.getElementById("DPS").innerHTML = Math.round(getDPS()*10)/10;
+
+
 
 
 }
@@ -149,19 +167,27 @@ function deleteLocalSave(){
 	localStorage.removeItem("WHDSAVE");
 }
 
+//upgrade amount = to 1 less than desired multiplier. ie. 4x bonus means touristmult +=3
 function touristUpgrade1(){
 	if (USD > 100 && tu1Bought == false){
 		tu1Bought = true;
-		touristMult += 2;
+		touristMult += 1;
+		USD -= 100;
 		document.getElementById("tu1").style.visibility = 'hidden';
+		document.getElementById("DPS").innerHTML = Math.round(getDPS()*10)/10;
+		document.getElementById("USD").innerHTML = Math.round(USD*10)/10;
 	}
 	
 }
 function mallCopUpgrade1(){
 	if (USD > 1000 && mcu1Bought == false){
 		mcu1Bought = true;
-		mallCopMult += 4;
+		mallCopMult += 3;
+		USD -=1000;
 		document.getElementById("mcu1").style.visibility = 'hidden';
+		document.getElementById("DPS").innerHTML = Math.round(getDPS()*10)/10;
+		document.getElementById("USD").innerHTML = Math.round(USD*10)/10;
+
 	}
 
 }

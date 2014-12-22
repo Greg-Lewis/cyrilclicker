@@ -1,49 +1,49 @@
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" rel="stylesheet" type="text/css" href="interface.css" />
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+		
 		<title>White House Danger 19</title>
 	</head>
 	<body>
+		<link type="text/css" rel="stylesheet" href="interface.css" />
+		<div style="color:#ffffff">
+		
 		Stop Terrorists to earn money because that's how the world works.
-		<br />
-		<br />
-		<button onclick="cyrilClick(1)">Stop Terrorists!</button>
-		US Dollars per second: <span id = "DPS">0</span>
-		<br />
-		USD: <span id = "USD">0</span>
-		<br />
-		<br />
+		</div>
+		<button class = "stopterrorists" onclick="cyrilClick(1)" >Stop Terrorists!</button>
+		
+		<div class="DPSUSD">
+			US Dollars per second: <span id = "DPS">0</span>
+			<br />
+			USD: <span id = "USD">0</span>
+		</div>
 		
 		
 		
+		<div class="touristSection">
+			<button onclick = "buyTourist()">Undercover Tourist</button><br />
+			USD per second boost: <span id = "touristDPS">.1</span><br />
+			Undercover Tourists: <span id="tourists">0</span><br />
+			Undercover Tourist Cost: <span id="touristCost">10</span><br />
+			<button id = "tu1"onclick = "touristUpgrade1()"> Tourist Upgrade 1, 2x bonus, cost 100 </button>
+		</div>
 		
-		<button onclick = "buyTourist()">Undercover Tourist</button>
-		USD per second boost: <span id = "touristDPS">.1</span>
-		<br />
-		Undercover Tourists: <span id="tourists">0</span>
-		<br />
-		Undercover Tourist Cost: <span id="touristCost">10</span>
-		<br />
-		<button id = "tu1"onclick = "touristUpgrade1()"> Tourist Upgrade 1, 2x bonus, cost 100 </button>
-		<br />
-		<br />
+		<div class="mallcopSection">
+			<button onclick = "buyMallCop()">Mall Cop </button><br />
+			USD per second boost: <span id = "mallCopDPS">.4</span><br />
+			Mall Cops: <span id="mallCops">0</span><br />
+			Mall Cops Cost: <span id="mallCopsCost">100</span><br />
+			<button id = "mcu1" onclick = "mallCopUpgrade1()">Mall Cop Upgrade 1, 4x bonus, cost 1000 </button>
+
+		</div>
 		
-		
-		<button onclick = "buyMallCop()">Mall Cop </button>
-		USD per second boost: <span id = "mallCopDPS">.4</span>
-		<br />
-		Mall Cops: <span id="mallCops">0</span>
-		<br />
-		Mall Cops Cost: <span id="mallCopsCost">100</span>
-		<br />
-		<button id = "mcu1" onclick = "mallCopUpgrade1()">Mall Cop Upgrade 1, 4x bonus, cost 1000 </button>
-		<br />
-		<br />
-		Number of people saved from terrorists: <span id="peopleSaved">0</span>
-		<br />
-		<br />
-		<br />
-		<button onclick = "deleteLocalSave()"> delete Local Save (no backsies)</button>
+		<div class="peopleSaved">
+			Number of people saved from terrorists: <span id="peopleSaved">0</span>
+		</div>
+
+		<div class="deleteButton">
+			<button onclick = "deleteLocalSave()"> delete Local Save (no backsies)</button>
+		</div>
 		
 		
 		
