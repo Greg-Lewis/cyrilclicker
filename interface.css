@@ -1,0 +1,40 @@
+body {
+	background-color: #353839;
+}
+
+.stopterrorists {
+	position: fixed;
+	left: 50px;
+	top: 75px;
+
+}
+.DPSUSD{
+	position: fixed;
+	left:50px;
+	top:100px;
+	color: #ffffff;
+}
+.touristsection{
+	position: fixed;
+	left: 475px;
+	top: 50px;
+	color: #ffffff;
+}
+.mallcopSection{
+	position:fixed;
+	left:475px;
+	top:200px;
+	color:#ffffff;
+}
+.deleteButton{
+	position: fixed;
+	left: 100px;
+	top: 600px;
+	color:#ffffff;
+}
+.peopleSaved{
+	position:fixed;
+	left:50px;
+	top:250px;
+	color:#ffffff;
+}
